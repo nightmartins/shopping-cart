@@ -40,4 +40,23 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+// Consultei o repositório do Ícaro Emanuel para corrigir a função
+// link: https://github.com/tryber/sd-014-b-project-shopping-cart/pull/36/files
+const fetchProducts = () => {
+  const apiUrl = fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
+    .then((response) => response.json())
+    .then(({ results }) => results.forEach((product) => {
+      const products = {
+        sku: product.id,
+        name: product.title,
+        image: product.thumbnail,
+      };
+      const productsList = document.querySelector('.items');
+      productsList.appendChild(createProductItemElement(products));
+    }));
+    return apiUrl;
+};
+
+window.onload = () => { 
+  fetchProducts();
+};
