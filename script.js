@@ -1,6 +1,8 @@
 // Tive uma aula sobre esse projeto com o aluno Ícaro Emanuel, consegui entender a lógica do assunto através do projeto dele. Muitas das funções aqui tem como referência seu projeto.
 // link: https://github.com/tryber/sd-014-b-project-shopping-cart/pull/36
 
+const cartList = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,11 +31,24 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) { 
   return section;
 }
 
+/*        REQUISITO 4 (passos 7-9)      */
+// 7. pega, na página html, os valores dos produtos que estão no carrinho e os salva no local storagem com a key cartItems
+const saveCartList = () => localStorage.setItem('cartItems', cartList.innerHTML);
+
+// 8. Puxa o cartItems do local storage e os adiciona à lista na página
+const getCartList = () => {
+  cartList.innerHTML = localStorage.getItem('cartItems');
+};
+
 /*       REQUISITO 3 (passo 6)      */
 // 6.
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartList();
 }
+
+// 9. torna possível apagar o item após trazê-lo do local storage
+cartList.addEventListener('click', cartItemClickListener);
 
 // 4.
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -69,6 +84,7 @@ function addProductToCart(sku) {
     .then((product) => {
       const cartItemsList = document.querySelector('.cart__items');
       cartItemsList.appendChild(createCartItemElement(product));
+      saveCartList();
     });
 }
 
@@ -80,4 +96,5 @@ document.addEventListener('click', (event) => {
 
 window.onload = () => {
   fetchProducts();
+  getCartList();
 };
