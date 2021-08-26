@@ -2,8 +2,8 @@
 // link: https://github.com/tryber/sd-014-b-project-shopping-cart/pull/36
 
 function createProductImageElement(imageSource) {
-  const img = document.createElement("img");
-  img.className = "item__image";
+  const img = document.createElement('img');
+  img.className = 'item__image';
   img.src = imageSource;
   return img;
 }
@@ -16,17 +16,23 @@ function createCustomElement(element, className, innerText) {
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) { // 2. definindo o padrão dos parâmetros para construir o objeto
-  const section = document.createElement("section");
-  section.className = "item";
+  const section = document.createElement('section');
+  section.className = 'item';
 
-  section.appendChild(createCustomElement("span", "item__sku", sku));
-  section.appendChild(createCustomElement("span", "item__title", name));
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(
-    createCustomElement("button", "item__add", "Adicionar ao carrinho!")
+    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
   );
 
   return section;
+}
+
+/*       REQUISITO 3 (passo 6)      */
+// 6.
+function cartItemClickListener(event) {
+  event.target.remove();
 }
 
 // 4.
@@ -39,11 +45,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 }
 
 function getSkuFromProductItem(item) {
-  return item.querySelector("span.item__sku").innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+  return item.querySelector('span.item__sku').innerText;
 }
 
 /*       REQUISITO 1 (passos 1-2)      */
