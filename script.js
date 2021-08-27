@@ -3,6 +3,7 @@
 
 const cartList = document.querySelector('.cart__items');
 const clearCartButton = document.querySelector('.empty-cart');
+const totalPriceArea = document.querySelector('.total-price');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -32,6 +33,15 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) { 
   return section;
 }
 
+/*       REQUISITO 5 (passo 13)     */
+function sumPrices() {
+  const cartItems = document.querySelectorAll('.cart__item');
+  const cartItemsArray = Array.prototype.map.call(cartItems, (li) => 
+    Number(li.innerHTML.slice(li.innerHTML.indexOf('$') + 1)));
+  const totalPrice = cartItemsArray.reduce((acumulator, current) => acumulator + current, 0);
+  totalPriceArea.innerHTML = totalPrice;
+}
+
 /*        REQUISITO 4 (passos 7-9)      */
 // 7. pega, na página html, os valores dos produtos que estão no carrinho e os salva no local storagem com a key cartItems
 const saveCartList = () => localStorage.setItem('cartItems', cartList.innerHTML);
@@ -39,6 +49,7 @@ const saveCartList = () => localStorage.setItem('cartItems', cartList.innerHTML)
 // 8. Puxa o cartItems do local storage e os adiciona à lista na página
 const getCartList = () => {
   cartList.innerHTML = localStorage.getItem('cartItems');
+  sumPrices();
 };
 
 /*       REQUISITO 3 (passo 6)      */
@@ -46,6 +57,7 @@ const getCartList = () => {
 function cartItemClickListener(event) {
   event.target.remove();
   saveCartList();
+  sumPrices();
 }
 
 // 9. torna possível apagar o item após trazê-lo do local storage
@@ -103,6 +115,7 @@ function addProductToCart(sku) {
       const cartItemsList = document.querySelector('.cart__items');
       cartItemsList.appendChild(createCartItemElement(product));
       saveCartList();
+      sumPrices();
     });
 }
 
@@ -117,6 +130,7 @@ document.addEventListener('click', (event) => {
 clearCartButton.addEventListener('click', () => {
   cartList.innerHTML = '';
   saveCartList();
+  sumPrices();
 });
 
 window.onload = () => {
