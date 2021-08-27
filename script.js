@@ -2,6 +2,7 @@
 // link: https://github.com/tryber/sd-014-b-project-shopping-cart/pull/36
 
 const cartList = document.querySelector('.cart__items');
+const clearCartButton = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -92,6 +93,13 @@ function addProductToCart(sku) {
 document.addEventListener('click', (event) => {
   if (event.target.className
     === 'item__add') addProductToCart(getSkuFromProductItem(event.target.parentElement));
+});
+
+/*       REQUISITO 6 (passos 10)     */
+// 10.
+clearCartButton.addEventListener('click', () => {
+  cartList.innerHTML = '';
+  saveCartList();
 });
 
 window.onload = () => {
