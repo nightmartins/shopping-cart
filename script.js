@@ -64,12 +64,29 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+/*       REQUISITO 7 (passos 11-12)     */
+// 11. 
+function showLoading() {
+  const loadingText = document.createElement('div');
+  loadingText.innerText = 'loading...';
+  loadingText.className = 'loading';
+  document.querySelector('.container').appendChild(loadingText);
+}
+
+// 12.
+function hideLoading() {
+  const loading = document.querySelector('.loading');
+  loading.remove();
+}
+
 /*       REQUISITO 1 (passos 1-2)      */
 /* 1. */
 function fetchProducts() {
+  showLoading();
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
     .then((response) => response.json())
     .then(({ results }) => {
+      hideLoading();
       results.forEach((product) => {
         const productsList = document.querySelector('.items');
         productsList.appendChild(createProductItemElement(product)); // chama a função createProductItemElement, usando como parâmetro cada produto do data, para construir o objeto, então o adiciona como filho da lista de produtos.
@@ -95,7 +112,7 @@ document.addEventListener('click', (event) => {
     === 'item__add') addProductToCart(getSkuFromProductItem(event.target.parentElement));
 });
 
-/*       REQUISITO 6 (passos 10)     */
+/*       REQUISITO 6 (passo 10)     */
 // 10.
 clearCartButton.addEventListener('click', () => {
   cartList.innerHTML = '';
