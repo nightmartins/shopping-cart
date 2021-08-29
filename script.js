@@ -34,6 +34,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) { 
 }
 
 /*       REQUISITO 5 (passo 13)     */
+// referência: https://github.com/tryber/sd-014-b-project-shopping-cart/pull/66/files
 function sumPrices() {
   const cartItems = document.querySelectorAll('.cart__item');
   const cartItemsArray = Array.prototype.map.call(cartItems, (li) => 
